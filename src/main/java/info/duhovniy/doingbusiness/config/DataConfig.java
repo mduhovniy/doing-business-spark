@@ -1,9 +1,9 @@
-package info.duhovniy.doingbusiness.configuration;
+package info.duhovniy.doingbusiness.config;
 
 
 import org.apache.spark.api.java.JavaSparkContext;
 
-interface DataConfig {
+public interface DataConfig {
 
     JavaSparkContext javaSparkContext();
 }

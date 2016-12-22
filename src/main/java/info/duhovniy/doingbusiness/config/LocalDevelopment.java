@@ -1,4 +1,4 @@
-package info.duhovniy.doingbusiness.configuration;
+package info.duhovniy.doingbusiness.config;
 
 
 import org.springframework.context.annotation.Profile;
@@ -10,6 +10,6 @@ import java.lang.annotation.Target;
 
 @Target(ElementType.TYPE)
 @Retention(RetentionPolicy.RUNTIME)
-@Profile("prod")
-@interface ClusterDevelopment {
+@Profile("dev")
+@interface LocalDevelopment {
 }
