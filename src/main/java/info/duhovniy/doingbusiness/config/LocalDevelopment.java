@@ -11,5 +11,5 @@ import java.lang.annotation.Target;
 @Target(ElementType.TYPE)
 @Retention(RetentionPolicy.RUNTIME)
 @Profile("dev")
-@interface LocalDevelopment {
+public @interface LocalDevelopment {
 }

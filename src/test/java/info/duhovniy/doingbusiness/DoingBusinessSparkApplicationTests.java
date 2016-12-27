@@ -24,7 +24,7 @@ public class DoingBusinessSparkApplicationTests {
     private static final Logger LOG = LoggerFactory.getLogger(DoingBusinessSparkApplicationTests.class);
 
 	@Autowired
-	private JavaSparkContext javaSparkContext;
+	private JavaSparkContext sc;
 
 	@Autowired
     private RatingService ratingService;
@@ -32,11 +32,11 @@ public class DoingBusinessSparkApplicationTests {
 	@Test
 	public void testTopXCountries() {
 
-	    List<String> list = Arrays.asList("Max", "Max", "Dima", "Ura", "Max", "Ivan", "Dima", "Felix");
-        JavaRDD<String> rdd = javaSparkContext.parallelize(list);
-        List<String> top2 = ratingService.topXCountries(rdd, 2);
+	    String list = "Max  Max   Dima  Ura Max     Ivan Dima Felix";
+        List<String> top = ratingService.topXCountries(sc.parallelize(Arrays.asList(list)), 3);
         LOG.info("---------------------------------------");
-        LOG.info(String.valueOf(top2));
+        top.forEach(System.out::println);
+        LOG.info(String.valueOf(top));
         LOG.info("---------------------------------------");
 
     }

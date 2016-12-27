@@ -8,12 +8,12 @@ import org.springframework.context.annotation.Configuration;
 
 @Configuration
 @LocalDevelopment
-class LocalDataConfig implements DataConfig {
+public class LocalDataConfig implements DataConfig {
 
     @Bean
     public JavaSparkContext javaSparkContext() {
         SparkConf conf = new SparkConf();
-        conf.setAppName("WB Doing Business with Spark").setMaster("local[2]");
+        conf.setAppName("WB Doing Business with Spark").setMaster("local[*]");
         return new JavaSparkContext(conf);
     }
 }
