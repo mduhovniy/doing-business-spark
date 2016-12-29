@@ -12,5 +12,5 @@ public interface RatingService extends Serializable {
 
     List<String> topXCountries(JavaRDD<String> lines, int x);
 
-    void setUserConfig(Broadcast<UserConfig> userConfig);
+    //void setUserConfig(Broadcast<UserConfig> userConfig);
 }

@@ -6,7 +6,7 @@ import org.apache.spark.api.java.JavaSparkContext;
 import java.io.Serializable;
 
 
-public interface DataConfig {
+public interface DataConfig extends Serializable {
 
     JavaSparkContext javaSparkContext();
 }
