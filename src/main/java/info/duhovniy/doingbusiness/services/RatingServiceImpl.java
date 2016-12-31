@@ -4,7 +4,6 @@ import info.duhovniy.doingbusiness.config.UserConfig;
 import info.duhovniy.doingbusiness.utils.WordUtils;
 import org.apache.spark.api.java.JavaRDD;
 import org.apache.spark.broadcast.Broadcast;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import scala.Tuple2;
 
@@ -12,15 +11,10 @@ import java.util.List;
 
 
 @Service
-//@AllArgsConstructor
 public class RatingServiceImpl implements RatingService {
 
     @AutowiredBroadcast
     private Broadcast<UserConfig> userConfig;
-
-//    public void setUserConfig(Broadcast<UserConfig> userConfig) {
-//        this.userConfig = userConfig;
-//    }
 
     @Override
     public List<String> topXCountries(JavaRDD<String> lines, int x) {

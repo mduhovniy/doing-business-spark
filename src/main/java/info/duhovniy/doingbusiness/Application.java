@@ -1,18 +1,15 @@
 package info.duhovniy.doingbusiness;
 
 import info.duhovniy.doingbusiness.config.DataConfig;
-import info.duhovniy.doingbusiness.config.LocalDataConfig;
-import info.duhovniy.doingbusiness.config.LocalDevelopment;
+import info.duhovniy.doingbusiness.services.DTFRatingService;
 import info.duhovniy.doingbusiness.services.RatingService;
-import lombok.AllArgsConstructor;
-import org.apache.spark.api.java.JavaRDD;
 import org.apache.spark.api.java.JavaSparkContext;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.apache.spark.sql.DataFrame;
+import org.apache.spark.sql.SQLContext;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.core.env.AbstractEnvironment;
 
-import java.util.Arrays;
 import java.util.List;
 
 
@@ -25,12 +22,21 @@ public class Application {
         AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext(AppConfig.class);
 
 		RatingService ratingService = context.getBean(RatingService.class);
-        JavaSparkContext sc = context.getBean(DataConfig.class).javaSparkContext();
+        DTFRatingService ratingServiceDF = context.getBean(DTFRatingService.class);
+        JavaSparkContext sc = new JavaSparkContext(context.getBean(DataConfig.class).sparkContext());
+
 
         List<String> top = ratingService.topXCountries(sc.textFile("datasource/input/*.txt"), 3);
         System.out.println("---------------------------------------");
         System.out.println(String.valueOf(top));
         System.out.println("---------------------------------------");
 
-	}
+        SQLContext ssc = context.getBean(DataConfig.class).sqlContext();
+        DataFrame df = ssc.read().json("datasource/input/test.json");
+        df.show();
+
+        System.out.println("---------------------------------------");
+        System.out.println(ratingServiceDF.topXCountries(df, 3));
+        System.out.println("---------------------------------------");
+    }
 }

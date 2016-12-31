@@ -3,13 +3,12 @@ package info.duhovniy.doingbusiness.services;
 import info.duhovniy.doingbusiness.config.DataConfig;
 import info.duhovniy.doingbusiness.config.UserConfig;
 import lombok.AllArgsConstructor;
+import org.apache.spark.api.java.JavaSparkContext;
 import org.springframework.beans.BeansException;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.config.BeanPostProcessor;
 import org.springframework.stereotype.Component;
 import org.springframework.util.ReflectionUtils;
 
-import java.io.Serializable;
 import java.lang.reflect.Field;
 
 
@@ -28,7 +27,7 @@ public class AutowiredBroadcastAnnotationBeanPostProcessor implements BeanPostPr
             AutowiredBroadcast annotation = field.getAnnotation(AutowiredBroadcast.class);
             if(annotation != null) {
                 field.setAccessible(true);
-                ReflectionUtils.setField(field, bean, dataConfig.javaSparkContext().broadcast(userConfig));
+                ReflectionUtils.setField(field, bean, new JavaSparkContext(dataConfig.sparkContext()).broadcast(userConfig));
             }
         }
         return bean;
