@@ -26,17 +26,21 @@ public class Application {
         JavaSparkContext sc = new JavaSparkContext(context.getBean(DataConfig.class).sparkContext());
 
 
-        List<String> top = ratingService.topXCountries(sc.textFile("datasource/input/*.txt"), 3);
+        List<String> top = ratingService.topXCountries(sc.textFile("datasource/input/test.txt"), 3);
         System.out.println("---------------------------------------");
         System.out.println(String.valueOf(top));
         System.out.println("---------------------------------------");
 
         SQLContext ssc = context.getBean(DataConfig.class).sqlContext();
-        DataFrame df = ssc.read().json("datasource/input/test.json");
+        DataFrame df = ssc.read().json("datasource/input/test_j.*");
         df.show();
+        df.printSchema();
+        df.groupBy("name").count().sort("count").show();
 
         System.out.println("---------------------------------------");
         System.out.println(ratingServiceDF.topXCountries(df, 3));
         System.out.println("---------------------------------------");
+
+        sc.stop();
     }
 }

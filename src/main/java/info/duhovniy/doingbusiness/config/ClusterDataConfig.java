@@ -13,8 +13,7 @@ public class ClusterDataConfig implements DataConfig {
 
     @Bean
     public SparkContext sparkContext() {
-        SparkConf conf = new SparkConf();
-        conf.setAppName("WB Doing Business with Spark");
+        SparkConf conf = new SparkConf().setAppName("WB Doing Business with Spark");
         return new SparkContext(conf);
     }
 

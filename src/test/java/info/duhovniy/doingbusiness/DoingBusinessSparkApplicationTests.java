@@ -1,7 +1,7 @@
 package info.duhovniy.doingbusiness;
 
 import info.duhovniy.doingbusiness.services.RatingService;
-import org.apache.spark.api.java.JavaRDD;
+import org.apache.spark.SparkContext;
 import org.apache.spark.api.java.JavaSparkContext;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -24,7 +24,7 @@ public class DoingBusinessSparkApplicationTests {
     private static final Logger LOG = LoggerFactory.getLogger(DoingBusinessSparkApplicationTests.class);
 
 	@Autowired
-	private JavaSparkContext sc;
+    private SparkContext sc;
 
 	@Autowired
     private RatingService ratingService;
@@ -33,7 +33,7 @@ public class DoingBusinessSparkApplicationTests {
 	public void testTopXCountries() {
 
 	    String list = "Max  Max   Dima  Ura Max     Ivan Dima Felix";
-        List<String> top = ratingService.topXCountries(sc.parallelize(Arrays.asList(list)), 3);
+        List<String> top = ratingService.topXCountries(new JavaSparkContext(sc).parallelize(Arrays.asList(list)), 3);
         LOG.info("---------------------------------------");
         top.forEach(System.out::println);
         LOG.info(String.valueOf(top));
